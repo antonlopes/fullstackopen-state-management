@@ -1,14 +1,10 @@
-import { useAnecdoteActions, useAnecdotes, useFilter, useNotificationActions } from '../store'
+import { useAnecdoteActions, useAnecdotes, useNotificationActions } from '../store'
 
 const AnecdoteList = () => {
   const anecdotes  = useAnecdotes()
   const { updateVote, deleteAnecdote } = useAnecdoteActions()
-  const filter = useFilter()
   const { setNotification } = useNotificationActions()
 
-
-  const anecdoteToShow = anecdotes.filter(anecdote => anecdote.content.toLowerCase().includes(filter.toLowerCase()))
-  const sortedAnecdotes = anecdoteToShow.toSorted((a, b) => b.votes - a.votes);
 
   const handleVote = async (anecdote) => {
     await updateVote(anecdote.id)
@@ -23,8 +19,8 @@ const AnecdoteList = () => {
 
   return (
     <div>
-      {sortedAnecdotes.map((anecdote) => (
-        <div key={anecdote.id}>
+      {anecdotes.map((anecdote) => (
+        <div key={anecdote.id} data-testid="anecdote">
           <div>{anecdote.content}</div>
           <div>
             has {anecdote.votes}
