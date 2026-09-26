@@ -1,17 +1,19 @@
 import AnecdoteForm from './components/AnecdoteForm'
 import Notification from './components/Notification'
 import { useAnecdotes } from './hooks/useAnecdotes'
-
+import useNotify from './hooks/useNotify'
 
 
 const App = () => {
-
+  const { notify } = useNotify()
   const { anecdotes, votesUpdate, isPending, isError } = useAnecdotes()
+
 
   const handleVote = (anecdote) => {
     votesUpdate(anecdote)
     // updateAnecdoteMutation.mutate({...anecdote, votes: anecdote.votes +1 })
     console.log('vote')
+    notify(`anecdote '${anecdote.content}' voted`)
   }
 
   // const anecdotes = [
